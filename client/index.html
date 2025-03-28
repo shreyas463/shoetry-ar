@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ShoeAR - Virtual Try-On Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Preload AR libraries -->
+    <link rel="preload" as="script" href="https://unpkg.com/three@0.159.0/build/three.min.js">
+    <link rel="preload" as="script" href="https://unpkg.com/three@0.159.0/examples/jsm/loaders/GLTFLoader.js">
+    <link rel="modulepreload" href="https://unpkg.com/@webxr-input-profiles/motion-controllers@1.0.0/dist/motion-controllers.module.js">
+    
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+        overscroll-behavior-y: contain;
+      }
+      #root {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
