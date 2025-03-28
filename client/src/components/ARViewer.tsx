@@ -67,23 +67,23 @@ const ARViewer: FC<ARViewerProps> = ({
     <div className="relative flex-1 overflow-hidden" ref={containerRef}>
       {/* Camera permission waiting state */}
       {!hasPermission && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 z-10 bg-gradient-to-b from-white to-purple-50">
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 z-10 bg-gradient-to-b from-[#1A2640] to-[#1A3056]">
           {/* Floating shapes in background */}
-          <div className="absolute top-1/4 left-1/4 w-24 h-24 rounded-full bg-gradient-to-br from-pink-200 to-purple-200 blur-3xl opacity-30"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-32 h-32 rounded-full bg-gradient-to-br from-indigo-200 to-blue-200 blur-3xl opacity-30"></div>
+          <div className="absolute top-1/4 left-1/4 w-24 h-24 rounded-full bg-gradient-to-br from-[#3B5BA5]/30 to-[#E87A5D]/30 blur-3xl opacity-30"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-32 h-32 rounded-full bg-gradient-to-br from-[#E87A5D]/30 to-[#F3B941]/30 blur-3xl opacity-30"></div>
           
           <div className="relative z-10 flex flex-col items-center max-w-sm">
-            <div className="mb-6 bg-gradient-to-br from-purple-500 to-indigo-600 p-6 rounded-full shadow-lg">
+            <div className="mb-6 bg-gradient-to-br from-[#3B5BA5] to-[#E87A5D] p-6 rounded-full shadow-lg">
               <Camera className="h-12 w-12 text-white" />
             </div>
-            <h2 className="text-2xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+            <h2 className="text-2xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#E87A5D] to-[#F3B941]">
               Camera Access Needed
             </h2>
-            <p className="text-gray-600 text-center mb-8 text-lg">
+            <p className="text-[#E87A5D]/80 text-center mb-8 text-lg">
               To try on shoes virtually in AR, we need your camera permission.
             </p>
             <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-[#3B5BA5] to-[#E87A5D] text-white font-medium py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
               onClick={requestPermission}
               disabled={isLoading}
             >
@@ -114,9 +114,9 @@ const ARViewer: FC<ARViewerProps> = ({
         
         {/* AR positioning guides */}
         {hasPermission && selectedProduct && (
-          <div className="ar-guide absolute bottom-1/4 left-1/2 transform -translate-x-1/2 border-2 border-white border-dashed rounded-full w-40 h-16 opacity-60 shadow-lg">
+          <div className="ar-guide absolute bottom-1/4 left-1/2 transform -translate-x-1/2 border-2 border-[#F3B941] border-dashed rounded-full w-40 h-16 opacity-60 shadow-lg">
             {/* Animated positioning indicator */}
-            <div className="absolute inset-0 rounded-full border-2 border-purple-400 animate-pulse"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-[#E87A5D] animate-pulse"></div>
           </div>
         )}
         
@@ -125,17 +125,17 @@ const ARViewer: FC<ARViewerProps> = ({
           <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center space-x-6">
             {/* Switch camera button */}
             <Button 
-              className="bg-white/90 backdrop-blur-md p-4 rounded-full shadow-lg hover:bg-purple-50 border border-purple-100" 
+              className="bg-[#1A3056]/90 backdrop-blur-md p-4 rounded-full shadow-lg hover:bg-[#3B5BA5]/60 border border-[#3B5BA5]/30" 
               onClick={toggleCamera}
               variant="ghost"
               size="icon"
             >
-              <RefreshCw className="h-5 w-5 text-gray-800" />
+              <RefreshCw className="h-5 w-5 text-[#F3B941]" />
             </Button>
             
             {/* Capture button */}
             <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 rounded-full shadow-lg hover:shadow-xl border-4 border-white" 
+              className="bg-gradient-to-r from-[#3B5BA5] to-[#E87A5D] p-6 rounded-full shadow-lg hover:shadow-xl border-4 border-[#1A3056]" 
               onClick={handleCaptureClick}
               variant="default"
               size="icon"
@@ -145,13 +145,13 @@ const ARViewer: FC<ARViewerProps> = ({
             
             {/* Torch button */}
             <Button 
-              className={`backdrop-blur-md p-4 rounded-full shadow-lg border ${isTorchOn ? 'bg-yellow-400/90 border-yellow-200' : 'bg-white/90 border-purple-100 hover:bg-purple-50'}`}
+              className={`backdrop-blur-md p-4 rounded-full shadow-lg border ${isTorchOn ? 'bg-[#F3B941]/90 border-[#F3B941]/20' : 'bg-[#1A3056]/90 border-[#3B5BA5]/30 hover:bg-[#3B5BA5]/60'}`}
               onClick={toggleTorch}
               variant="ghost"
               size="icon"
               disabled={isFrontCamera}
             >
-              <Flashlight className={`h-5 w-5 ${isTorchOn ? "text-white" : "text-gray-800"}`} />
+              <Flashlight className={`h-5 w-5 ${isTorchOn ? "text-[#1A3056]" : "text-[#F3B941]"}`} />
             </Button>
           </div>
         )}

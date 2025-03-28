@@ -8,6 +8,47 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-[#1A2640] text-gray-100;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(59, 91, 165, 0.3);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 91, 165, 0.5);
+  }
+}
+
+@layer components {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 91, 165, 0.3) transparent;
+  }
+
+  .scrollbar-thumb-blue {
+    scrollbar-color: rgba(59, 91, 165, 0.3) transparent;
+  }
+
+  /* Glass morphism effect */
+  .glass-morphism {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(26, 38, 64, 0.8);
+    border: 1px solid rgba(59, 91, 165, 0.2);
   }
 }

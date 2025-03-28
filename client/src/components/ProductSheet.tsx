@@ -137,13 +137,13 @@ const ProductSheet: FC<ProductSheetProps> = ({
       </div>
       
       {/* Products grid */}
-      <div className="px-5 pt-2 pb-5 overflow-y-auto h-[calc(85vh-11rem)] relative z-10">
+      <div className="px-5 pt-2 pb-20 overflow-y-auto h-[calc(100vh-16rem)] relative z-10 scrollbar-thin scrollbar-thumb-[#3B5BA5]/30 scrollbar-track-transparent">
         <h3 className="text-lg font-semibold mb-3 text-gray-100">
           {selectedCategoryId 
             ? `${categories?.find(c => c.id === selectedCategoryId)?.name} Collection` 
             : 'Featured Styles'}
         </h3>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-2 gap-5 pb-10">
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
