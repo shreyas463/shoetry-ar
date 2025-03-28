@@ -113,7 +113,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const sportCategory = await storage.getCategoryByName("Sport");
         const hikingCategory = await storage.getCategoryByName("Hiking");
         
-        if (runningCategory && casualCategory && sportCategory && hikingCategory) {
+        const fashionCategory = await storage.getCategoryByName("Fashion");
+        
+        if (runningCategory && casualCategory && sportCategory && hikingCategory && fashionCategory) {
           const products = [
             {
               name: "Air Cloud Runner",
@@ -168,6 +170,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
               categoryId: casualCategory.id,
               imageUrl: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
               modelUrl: "/models/city_walker.glb"
+            },
+            {
+              name: "Velocity X",
+              price: 159.99,
+              description: "Premium running shoes with enhanced speed design",
+              rating: 4.7,
+              categoryId: runningCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/velocity_x.glb"
+            },
+            {
+              name: "Summit Pro",
+              price: 179.99,
+              description: "Advanced hiking shoes for serious mountain trails",
+              rating: 4.9,
+              categoryId: hikingCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1553545985-1e0d8781d5db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/summit_pro.glb"
+            },
+            {
+              name: "Urban Chic",
+              price: 129.99,
+              description: "Trendy fashion sneakers for style-conscious individuals",
+              rating: 4.6,
+              categoryId: fashionCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/urban_chic.glb"
+            },
+            {
+              name: "Retro Classic",
+              price: 99.99,
+              description: "Vintage-inspired casual shoes with modern comfort",
+              rating: 4.5,
+              categoryId: casualCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/retro_classic.glb"
+            },
+            {
+              name: "Bounce Elite",
+              price: 149.99,
+              description: "Basketball shoes with superior cushioning and ankle support",
+              rating: 4.8,
+              categoryId: sportCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/bounce_elite.glb"
+            },
+            {
+              name: "Street Flow",
+              price: 119.99,
+              description: "Sleek and stylish urban sneakers for everyday wear",
+              rating: 4.4,
+              categoryId: fashionCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/street_flow.glb"
+            },
+            {
+              name: "Alpine Trek",
+              price: 189.99,
+              description: "Waterproof hiking boots for extreme conditions",
+              rating: 4.9,
+              categoryId: hikingCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1606890658317-7d14490b76fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/alpine_trek.glb"
+            },
+            {
+              name: "Marathon Pro",
+              price: 169.99,
+              description: "Long-distance running shoes with enhanced durability",
+              rating: 4.8,
+              categoryId: runningCategory.id,
+              imageUrl: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+              modelUrl: "/models/marathon_pro.glb"
             }
           ];
           
