@@ -2,6 +2,7 @@ import { FC, useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ShoppingBag } from "lucide-react";
 import { useProductSheet } from "@/hooks/use-product-sheet";
 import type { Product, Category } from "@shared/schema";
@@ -10,12 +11,14 @@ interface ProductSheetProps {
   products: Product[];
   selectedProduct: Product | null;
   onSelectProduct: (product: Product) => void;
+  isLoading?: boolean;
 }
 
 const ProductSheet: FC<ProductSheetProps> = ({ 
   products, 
   selectedProduct, 
-  onSelectProduct 
+  onSelectProduct,
+  isLoading = false
 }) => {
   // Ref for the sheet
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -143,16 +146,29 @@ const ProductSheet: FC<ProductSheetProps> = ({
             ? `${categories?.find(c => c.id === selectedCategoryId)?.name} Collection` 
             : 'Featured Styles'}
         </h3>
-        <div className="grid grid-cols-2 gap-5 pb-10">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isSelected={selectedProduct?.id === product.id}
-              onSelect={() => onSelectProduct(product)}
-            />
-          ))}
-        </div>
+        
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-5 pb-10">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-[#1A3056]/50 backdrop-blur-sm rounded-xl p-3 h-48 flex flex-col">
+                <Skeleton className="w-full h-28 bg-[#3B5BA5]/30 rounded-lg mb-2" />
+                <Skeleton className="h-4 bg-[#3B5BA5]/30 rounded-full w-3/4 mb-1" />
+                <Skeleton className="h-3 bg-[#3B5BA5]/20 rounded-full w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-5 pb-10">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                isSelected={selectedProduct?.id === product.id}
+                onSelect={() => onSelectProduct(product)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

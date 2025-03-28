@@ -19,8 +19,8 @@ export default function Home() {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
-  // Query products
-  const { data: products } = useQuery({ 
+  // Query products from Sneaks API
+  const { data: products, isLoading: isLoadingProducts } = useQuery({ 
     queryKey: ["/api/products"],
   });
 
@@ -67,6 +67,7 @@ export default function Home() {
         products={products || []}
         selectedProduct={selectedProduct}
         onSelectProduct={handleSelectProduct}
+        isLoading={isLoadingProducts}
       />
       
       <HelpModal
