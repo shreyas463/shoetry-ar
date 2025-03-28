@@ -20,7 +20,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
   // Query products from Sneaks API
-  const { data: products, isLoading: isLoadingProducts } = useQuery({ 
+  const { data: products = [], isLoading: isLoadingProducts } = useQuery<Product[]>({ 
     queryKey: ["/api/products"],
   });
 
@@ -64,7 +64,7 @@ export default function Home() {
       />
       
       <ProductSheet 
-        products={products || []}
+        products={products}
         selectedProduct={selectedProduct}
         onSelectProduct={handleSelectProduct}
         isLoading={isLoadingProducts}

@@ -108,8 +108,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // We're now using real-time data from Sneaks API instead of demo data
-  console.log("Using real-time sneaker data from Sneaks API");
+  // Log API availability status
+  // Log that we're using fallback data due to StockX connection issues
+  console.log("Using fallback sneaker data for reliable performance");
 
   const httpServer = createServer(app);
   return httpServer;
