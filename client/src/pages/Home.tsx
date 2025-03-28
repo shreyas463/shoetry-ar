@@ -46,13 +46,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full relative bg-gradient-to-b from-white to-purple-50">
+    <div className="flex flex-col h-screen w-full relative bg-gradient-to-b from-gray-900 to-purple-950">
       {/* App overlay gradient for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-purple-50/30 to-violet-100/20 z-0 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-purple-900/20 to-indigo-900/20 z-0 pointer-events-none"></div>
       
       {/* Decorative shapes */}
-      <div className="absolute top-20 left-5 w-24 h-24 rounded-full bg-gradient-to-r from-pink-200 to-purple-200 blur-3xl opacity-30 z-0"></div>
-      <div className="absolute bottom-40 right-5 w-32 h-32 rounded-full bg-gradient-to-r from-blue-200 to-indigo-200 blur-3xl opacity-30 z-0"></div>
+      <div className="absolute top-20 left-5 w-24 h-24 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 blur-3xl opacity-20 z-0"></div>
+      <div className="absolute bottom-40 right-5 w-32 h-32 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 blur-3xl opacity-20 z-0"></div>
+      <div className="absolute top-60 right-10 w-20 h-20 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-600 blur-3xl opacity-20 z-0"></div>
       
       <Header onShowHelp={handleShowHelp} />
       

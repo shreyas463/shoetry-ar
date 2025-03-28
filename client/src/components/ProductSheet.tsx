@@ -52,13 +52,13 @@ const ProductSheet: FC<ProductSheetProps> = ({
   return (
     <div 
       ref={sheetRef}
-      className={`product-sheet fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md rounded-t-3xl shadow-xl z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
+      className={`product-sheet fixed bottom-0 left-0 right-0 bg-gray-800/90 backdrop-blur-md rounded-t-3xl shadow-xl z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
       style={{
         transform: isExpanded ? "translateY(0)" : "translateY(calc(100% - 9rem))"
       }}
     >
       {/* Glass morphism decorative element */}
-      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-purple-100/50 to-transparent rounded-t-3xl z-0 pointer-events-none"></div>
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-purple-800/30 to-transparent rounded-t-3xl z-0 pointer-events-none"></div>
     
       {/* Handle for dragging sheet up/down */}
       <div 
@@ -70,11 +70,11 @@ const ProductSheet: FC<ProductSheetProps> = ({
       </div>
       
       {/* Product sheet header with current selections */}
-      <div className="px-6 py-4 border-b border-purple-100/50 flex items-center justify-between relative z-10">
+      <div className="px-6 py-4 border-b border-gray-700/50 flex items-center justify-between relative z-10">
         <div className="flex items-center">
           {selectedProduct ? (
             <>
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-xl overflow-hidden mr-3 shadow-sm p-0.5">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-600/50 to-indigo-600/50 rounded-xl overflow-hidden mr-3 shadow-sm p-0.5">
                 <img 
                   src={selectedProduct.imageUrl} 
                   alt={selectedProduct.name}
@@ -82,14 +82,14 @@ const ProductSheet: FC<ProductSheetProps> = ({
                 />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800">{selectedProduct.name}</h3>
+                <h3 className="font-semibold text-gray-100">{selectedProduct.name}</h3>
                 <span className="text-sm font-medium text-primary">${selectedProduct.price.toFixed(2)}</span>
               </div>
             </>
           ) : (
             <div>
-              <h3 className="font-semibold text-gray-800">Find Your Style</h3>
-              <span className="text-sm text-gray-500">Explore our collection</span>
+              <h3 className="font-semibold text-gray-100">Find Your Style</h3>
+              <span className="text-sm text-gray-400">Explore our collection</span>
             </div>
           )}
         </div>
@@ -126,7 +126,7 @@ const ProductSheet: FC<ProductSheetProps> = ({
               className={`py-2 px-4 text-sm font-medium rounded-full transition-all ${
                 selectedCategoryId === category.id 
                   ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md" 
-                  : "bg-white/80 backdrop-blur-sm text-gray-700 border border-purple-100 hover:border-purple-200"
+                  : "bg-gray-700/50 backdrop-blur-sm text-gray-200 border border-gray-600 hover:border-gray-500"
               }`}
               onClick={() => handleCategoryClick(category.id)}
             >
@@ -138,7 +138,7 @@ const ProductSheet: FC<ProductSheetProps> = ({
       
       {/* Products grid */}
       <div className="px-5 pt-2 pb-5 overflow-y-auto h-[calc(85vh-11rem)] relative z-10">
-        <h3 className="text-lg font-semibold mb-3 text-gray-800">
+        <h3 className="text-lg font-semibold mb-3 text-gray-100">
           {selectedCategoryId 
             ? `${categories?.find(c => c.id === selectedCategoryId)?.name} Collection` 
             : 'Featured Styles'}
