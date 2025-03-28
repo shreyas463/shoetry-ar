@@ -25,8 +25,32 @@ export function useProductSheet(
     document.addEventListener("pointerup", endDrag);
     document.addEventListener("pointercancel", endDrag);
     
+    // Expand sheet on double tap/click
+    const lastTap = sheetRef.current.getAttribute('data-last-tap');
+    const now = new Date().getTime();
+    const doubleTapThreshold = 300; // ms
+    
+    if (lastTap && now - parseInt(lastTap) < doubleTapThreshold) {
+      // Double tap detected
+      if (!isExpanded) {
+        if (sheetRef.current) {
+          sheetRef.current.style.transform = 'translateY(0)';
+          setIsExpanded(true);
+        }
+      } else {
+        if (sheetRef.current) {
+          sheetRef.current.style.transform = `translateY(calc(100% - 9rem))`;
+          setIsExpanded(false);
+        }
+      }
+    }
+    
+    if (sheetRef.current) {
+      sheetRef.current.setAttribute('data-last-tap', now.toString());
+    }
+    
     e.preventDefault();
-  }, [sheetRef]);
+  }, [sheetRef, isExpanded]);
   
   // Handle dragging
   const onDrag = useCallback((e: PointerEvent) => {
@@ -69,8 +93,26 @@ export function useProductSheet(
     document.removeEventListener("pointercancel", endDrag);
   }, [isDragging, onDrag, sheetRef]);
   
+  // Function to manually expand the sheet
+  const expandSheet = useCallback(() => {
+    if (sheetRef.current) {
+      sheetRef.current.style.transform = 'translateY(0)';
+      setIsExpanded(true);
+    }
+  }, [sheetRef]);
+  
+  // Function to manually collapse the sheet
+  const collapseSheet = useCallback(() => {
+    if (sheetRef.current) {
+      sheetRef.current.style.transform = `translateY(calc(100% - 9rem))`;
+      setIsExpanded(false);
+    }
+  }, [sheetRef]);
+
   return {
     isExpanded,
-    startDrag
+    startDrag,
+    expandSheet,
+    collapseSheet
   };
 }

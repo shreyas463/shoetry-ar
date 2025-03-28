@@ -30,7 +30,7 @@ const ProductSheet: FC<ProductSheetProps> = ({
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   
   // Use product sheet drag logic
-  const { isExpanded, startDrag } = useProductSheet(sheetRef);
+  const { isExpanded, startDrag, expandSheet, collapseSheet } = useProductSheet(sheetRef);
   
   // Filtered products
   const filteredProducts = selectedCategoryId 
@@ -52,7 +52,7 @@ const ProductSheet: FC<ProductSheetProps> = ({
   return (
     <div 
       ref={sheetRef}
-      className={`product-sheet absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-lg z-30 h-[85vh] ${isExpanded ? 'expanded' : 'collapsed'}`}
+      className={`product-sheet fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-lg z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
       style={{
         transform: isExpanded ? "translateY(0)" : "translateY(calc(100% - 9rem))"
       }}
@@ -99,6 +99,19 @@ const ProductSheet: FC<ProductSheetProps> = ({
           Buy Now
         </Button>
       </div>
+      
+      {/* View All Products button (only shown when collapsed) */}
+      {!isExpanded && (
+        <div className="px-4 py-2 flex justify-center">
+          <Button
+            variant="default"
+            className="w-full py-2 text-sm font-medium rounded-full bg-primary text-white"
+            onClick={expandSheet}
+          >
+            View All Products
+          </Button>
+        </div>
+      )}
       
       {/* Product categories */}
       <div className="px-4 pt-4 overflow-x-auto whitespace-nowrap pb-2 flex space-x-2">
