@@ -9,16 +9,16 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ title = "ShoeAR", onShowHelp }) => {
   return (
-    <header className="flex justify-between items-center px-5 py-4 bg-white/80 backdrop-blur-md z-20 relative">
+    <header className="flex justify-between items-center px-5 py-4 bg-[#1A2640]/80 backdrop-blur-md z-20 relative border-b border-[#3B5BA5]/20">
       <div className="flex items-center">
-        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full p-2 mr-2 shadow-md">
+        <div className="bg-gradient-to-r from-[#3B5BA5] to-[#E87A5D] rounded-full p-2 mr-2 shadow-md">
           <Sparkles className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+          <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#E87A5D] to-[#F3B941]">
             {title}
           </h1>
-          <p className="text-xs text-gray-500">Virtual Try-On</p>
+          <p className="text-xs text-[#E87A5D]/80">Virtual Try-On</p>
         </div>
       </div>
       {onShowHelp && (
@@ -26,10 +26,10 @@ const Header: FC<HeaderProps> = ({ title = "ShoeAR", onShowHelp }) => {
           <Button 
             variant="outline" 
             size="icon" 
-            className="rounded-full border border-purple-200 shadow-sm bg-white hover:bg-purple-50" 
+            className="rounded-full border border-[#3B5BA5]/30 shadow-sm bg-[#1A3056]/70 hover:bg-[#3B5BA5]/30" 
             onClick={onShowHelp}
           >
-            <HelpCircle className="h-5 w-5 text-purple-700" />
+            <HelpCircle className="h-5 w-5 text-[#F3B941]" />
           </Button>
         </div>
       )}

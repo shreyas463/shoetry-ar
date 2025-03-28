@@ -46,14 +46,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full relative bg-gradient-to-b from-gray-900 to-purple-950">
+    <div className="flex flex-col h-screen w-full relative bg-gradient-to-b from-[#1A2640] to-[#0A1525]">
       {/* App overlay gradient for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-purple-900/20 to-indigo-900/20 z-0 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#3B5BA5]/20 to-[#E87A5D]/10 z-0 pointer-events-none"></div>
       
       {/* Decorative shapes */}
-      <div className="absolute top-20 left-5 w-24 h-24 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 blur-3xl opacity-20 z-0"></div>
-      <div className="absolute bottom-40 right-5 w-32 h-32 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 blur-3xl opacity-20 z-0"></div>
-      <div className="absolute top-60 right-10 w-20 h-20 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-600 blur-3xl opacity-20 z-0"></div>
+      <div className="absolute top-20 left-5 w-24 h-24 rounded-full bg-gradient-to-r from-[#E87A5D] to-[#F3B941] blur-3xl opacity-20 z-0"></div>
+      <div className="absolute bottom-40 right-5 w-32 h-32 rounded-full bg-gradient-to-r from-[#3B5BA5] to-[#2A4890] blur-3xl opacity-20 z-0"></div>
+      <div className="absolute top-60 right-10 w-20 h-20 rounded-full bg-gradient-to-r from-[#F3B941] to-[#E87A5D] blur-3xl opacity-20 z-0"></div>
       
       <Header onShowHelp={handleShowHelp} />
       

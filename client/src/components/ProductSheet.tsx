@@ -52,13 +52,13 @@ const ProductSheet: FC<ProductSheetProps> = ({
   return (
     <div 
       ref={sheetRef}
-      className={`product-sheet fixed bottom-0 left-0 right-0 bg-gray-800/90 backdrop-blur-md rounded-t-3xl shadow-xl z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
+      className={`product-sheet fixed bottom-0 left-0 right-0 bg-[#1A2640]/90 backdrop-blur-md rounded-t-3xl shadow-xl z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
       style={{
         transform: isExpanded ? "translateY(0)" : "translateY(calc(100% - 9rem))"
       }}
     >
       {/* Glass morphism decorative element */}
-      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-purple-800/30 to-transparent rounded-t-3xl z-0 pointer-events-none"></div>
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#3B5BA5]/30 to-transparent rounded-t-3xl z-0 pointer-events-none"></div>
     
       {/* Handle for dragging sheet up/down */}
       <div 
@@ -66,15 +66,15 @@ const ProductSheet: FC<ProductSheetProps> = ({
         className="flex justify-center py-3 cursor-grab relative z-10"
         onPointerDown={startDrag}
       >
-        <div className="w-12 h-1.5 bg-purple-300 rounded-full opacity-80"></div>
+        <div className="w-12 h-1.5 bg-[#F3B941] rounded-full opacity-80"></div>
       </div>
       
       {/* Product sheet header with current selections */}
-      <div className="px-6 py-4 border-b border-gray-700/50 flex items-center justify-between relative z-10">
+      <div className="px-6 py-4 border-b border-[#3B5BA5]/30 flex items-center justify-between relative z-10">
         <div className="flex items-center">
           {selectedProduct ? (
             <>
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-600/50 to-indigo-600/50 rounded-xl overflow-hidden mr-3 shadow-sm p-0.5">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#3B5BA5]/50 to-[#E87A5D]/30 rounded-xl overflow-hidden mr-3 shadow-sm p-0.5">
                 <img 
                   src={selectedProduct.imageUrl} 
                   alt={selectedProduct.name}
@@ -83,18 +83,18 @@ const ProductSheet: FC<ProductSheetProps> = ({
               </div>
               <div>
                 <h3 className="font-semibold text-gray-100">{selectedProduct.name}</h3>
-                <span className="text-sm font-medium text-primary">${selectedProduct.price.toFixed(2)}</span>
+                <span className="text-sm font-medium text-[#F3B941]">${selectedProduct.price.toFixed(2)}</span>
               </div>
             </>
           ) : (
             <div>
               <h3 className="font-semibold text-gray-100">Find Your Style</h3>
-              <span className="text-sm text-gray-400">Explore our collection</span>
+              <span className="text-sm text-[#E87A5D]/80">Explore our collection</span>
             </div>
           )}
         </div>
         <Button 
-          className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2 px-5 rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-all"
+          className="bg-gradient-to-r from-[#E87A5D] to-[#F3B941] text-white py-2 px-5 rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-all"
           onClick={handleBuyNow}
           disabled={!selectedProduct}
         >
@@ -108,7 +108,7 @@ const ProductSheet: FC<ProductSheetProps> = ({
         <div className="px-5 py-3 flex justify-center relative z-10">
           <Button
             variant="default"
-            className="w-full py-2.5 text-sm font-medium rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:shadow-lg transition-all"
+            className="w-full py-2.5 text-sm font-medium rounded-full bg-gradient-to-r from-[#3B5BA5] to-[#2A4A9F] text-white shadow-md hover:shadow-lg transition-all"
             onClick={expandSheet}
           >
             Explore All Styles
@@ -125,8 +125,8 @@ const ProductSheet: FC<ProductSheetProps> = ({
               variant="outline"
               className={`py-2 px-4 text-sm font-medium rounded-full transition-all ${
                 selectedCategoryId === category.id 
-                  ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md" 
-                  : "bg-gray-700/50 backdrop-blur-sm text-gray-200 border border-gray-600 hover:border-gray-500"
+                  ? "bg-gradient-to-r from-[#E87A5D] to-[#F3B941] text-white border-0 shadow-md" 
+                  : "bg-[#1A3056]/50 backdrop-blur-sm text-gray-200 border border-[#3B5BA5]/30 hover:border-[#3B5BA5]/50"
               }`}
               onClick={() => handleCategoryClick(category.id)}
             >
