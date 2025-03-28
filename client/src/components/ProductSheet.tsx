@@ -52,46 +52,49 @@ const ProductSheet: FC<ProductSheetProps> = ({
   return (
     <div 
       ref={sheetRef}
-      className={`product-sheet fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-lg z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
+      className={`product-sheet fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md rounded-t-3xl shadow-xl z-30 h-[85vh] transition-transform ${isExpanded ? 'expanded' : 'collapsed'}`}
       style={{
         transform: isExpanded ? "translateY(0)" : "translateY(calc(100% - 9rem))"
       }}
     >
+      {/* Glass morphism decorative element */}
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-purple-100/50 to-transparent rounded-t-3xl z-0 pointer-events-none"></div>
+    
       {/* Handle for dragging sheet up/down */}
       <div 
         ref={handleRef}
-        className="flex justify-center py-2 cursor-grab"
+        className="flex justify-center py-3 cursor-grab relative z-10"
         onPointerDown={startDrag}
       >
-        <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
+        <div className="w-12 h-1.5 bg-purple-300 rounded-full opacity-80"></div>
       </div>
       
       {/* Product sheet header with current selections */}
-      <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-purple-100/50 flex items-center justify-between relative z-10">
         <div className="flex items-center">
           {selectedProduct ? (
             <>
-              <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden mr-3">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-xl overflow-hidden mr-3 shadow-sm p-0.5">
                 <img 
                   src={selectedProduct.imageUrl} 
                   alt={selectedProduct.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-lg"
                 />
               </div>
               <div>
-                <h3 className="font-medium">{selectedProduct.name}</h3>
-                <span className="text-sm text-gray-600">${selectedProduct.price.toFixed(2)}</span>
+                <h3 className="font-semibold text-gray-800">{selectedProduct.name}</h3>
+                <span className="text-sm font-medium text-primary">${selectedProduct.price.toFixed(2)}</span>
               </div>
             </>
           ) : (
             <div>
-              <h3 className="font-medium">Select a Product</h3>
-              <span className="text-sm text-gray-600">Choose from our collection</span>
+              <h3 className="font-semibold text-gray-800">Find Your Style</h3>
+              <span className="text-sm text-gray-500">Explore our collection</span>
             </div>
           )}
         </div>
         <Button 
-          className="bg-primary text-white py-2 px-5 rounded-full text-sm font-medium"
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2 px-5 rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-all"
           onClick={handleBuyNow}
           disabled={!selectedProduct}
         >
@@ -102,38 +105,45 @@ const ProductSheet: FC<ProductSheetProps> = ({
       
       {/* View All Products button (only shown when collapsed) */}
       {!isExpanded && (
-        <div className="px-4 py-2 flex justify-center">
+        <div className="px-5 py-3 flex justify-center relative z-10">
           <Button
             variant="default"
-            className="w-full py-2 text-sm font-medium rounded-full bg-primary text-white"
+            className="w-full py-2.5 text-sm font-medium rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:shadow-lg transition-all"
             onClick={expandSheet}
           >
-            View All Products
+            Explore All Styles
           </Button>
         </div>
       )}
       
       {/* Product categories */}
-      <div className="px-4 pt-4 overflow-x-auto whitespace-nowrap pb-2 flex space-x-2">
-        {categories?.map((category) => (
-          <Button
-            key={category.id}
-            variant={selectedCategoryId === category.id ? "default" : "secondary"}
-            className={`py-2 px-4 text-sm font-medium rounded-full ${
-              selectedCategoryId === category.id 
-                ? "bg-primary text-white" 
-                : "bg-gray-100 text-gray-700"
-            }`}
-            onClick={() => handleCategoryClick(category.id)}
-          >
-            {category.name}
-          </Button>
-        ))}
+      <div className="px-5 pt-5 overflow-x-auto whitespace-nowrap pb-3 flex space-x-2 relative z-10">
+        <div className="pr-1 flex space-x-2">
+          {categories?.map((category) => (
+            <Button
+              key={category.id}
+              variant="outline"
+              className={`py-2 px-4 text-sm font-medium rounded-full transition-all ${
+                selectedCategoryId === category.id 
+                  ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md" 
+                  : "bg-white/80 backdrop-blur-sm text-gray-700 border border-purple-100 hover:border-purple-200"
+              }`}
+              onClick={() => handleCategoryClick(category.id)}
+            >
+              {category.name}
+            </Button>
+          ))}
+        </div>
       </div>
       
       {/* Products grid */}
-      <div className="p-4 overflow-y-auto h-[calc(85vh-10rem)]">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="px-5 pt-2 pb-5 overflow-y-auto h-[calc(85vh-11rem)] relative z-10">
+        <h3 className="text-lg font-semibold mb-3 text-gray-800">
+          {selectedCategoryId 
+            ? `${categories?.find(c => c.id === selectedCategoryId)?.name} Collection` 
+            : 'Featured Styles'}
+        </h3>
+        <div className="grid grid-cols-2 gap-5">
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
