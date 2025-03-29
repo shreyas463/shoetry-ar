@@ -44,20 +44,18 @@ const ViroARView = ({ product, onBack }: ViroARViewProps) => {
   const [activeColorHex, setActiveColorHex] = useState<string>('#3B5BA5');
   const arNavigatorRef = useRef(null);
   
-  // Set up AR environment
+  // Set up AR environment - optimized for faster initialization
   useEffect(() => {
-    // Initialize AR tracking targets
+    // Initialize AR tracking targets asynchronously
     setupTrackingTargets();
     
-    // Check device AR capabilities and enable AR
-    setTimeout(() => {
-      setArEnabled(true);
-    }, 1000);
+    // Enable AR immediately without artificial delay
+    setArEnabled(true);
     
-    // Show feature highlight tips
+    // Show feature highlight tips for shorter time
     const highlightTimer = setTimeout(() => {
       setShowFeatureHighlight(false);
-    }, 5000);
+    }, 3000);
     
     return () => {
       clearTimeout(highlightTimer);
@@ -184,9 +182,16 @@ const ViroARView = ({ product, onBack }: ViroARViewProps) => {
     setShowEffectsPanel(!showEffectsPanel);
   };
   
-  // Handle effect selection
-  const handleEffectSelect = (effectName: string) => {
-    // If clicking the same effect, toggle it off
+  // Handle effect selection with support for null values
+  const handleEffectSelect = (effectName: string | null) => {
+    // If null is passed directly, it means the effect was toggled off
+    if (effectName === null) {
+      setActiveEffect(null);
+      setStatusMessage('Effect removed');
+      return;
+    }
+    
+    // If it's the same as current effect, toggle it off
     if (activeEffect === effectName) {
       setActiveEffect(null);
       setStatusMessage('Effect removed');
