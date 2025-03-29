@@ -11,14 +11,16 @@ import {
   SafeAreaView 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-// Import types
+// Import types and components
 import { Product, Category } from '../types/schema';
+import ProductCard from '../components/ProductCard';
+import CategoryItem from '../components/CategoryItem';
+import FeatureBanner from '../components/FeatureBanner';
 
-// API URL
-const API_URL = 'http://localhost:5000/api';
+// Import API utilities
+import { getProducts, getCategories, getFeaturedProducts } from '../utils/api';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -43,60 +45,31 @@ const HomeScreen = () => {
   const fetchInitialData = async () => {
     try {
       setIsLoading(true);
-      const [categoriesResponse, productsResponse] = await Promise.all([
-        fetch(`${API_URL}/categories`),
-        fetch(`${API_URL}/products?featured=true`)
+      
+      // Use the API utility functions
+      const [categoriesData, featuredData] = await Promise.all([
+        getCategories(),
+        getFeaturedProducts()
       ]);
       
-      const categoriesData = await categoriesResponse.json();
-      const productsData = await productsResponse.json();
-      
       setCategories(categoriesData);
-      setFeaturedProducts(productsData.slice(0, 5)); // Get first 5 as featured
+      setFeaturedProducts(featuredData.slice(0, 5)); // Get first 5 as featured
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching initial data:', error);
       setIsLoading(false);
       
-      // Fallback data for demo (would be removed in production)
-      setCategories([
-        { id: 1, name: 'Running' },
-        { id: 2, name: 'Casual' },
-        { id: 3, name: 'Basketball' },
-        { id: 4, name: 'Formal' },
-        { id: 5, name: 'Skateboarding' }
-      ]);
-      
-      setFeaturedProducts([
-        { 
-          id: 1, 
-          name: 'Air Max 270',
-          brand: 'Nike',
-          price: 150, 
-          description: 'Maximum comfort with air cushioning',
-          imageUrl: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/skwgyqrbfzhu6uyeh0gg/air-max-270-shoes-9KTdjGPz.png',
-          categoryId: 1,
-          inStock: true
-        },
-        { 
-          id: 2, 
-          name: 'Ultraboost 21',
-          brand: 'Adidas',
-          price: 180, 
-          description: 'Responsive boost cushioning',
-          imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/96a5f085ef594eb98039abad01056711_9366/Ultraboost_21_Shoes_Black_FY0378_01_standard.jpg',
-          categoryId: 1,
-          inStock: true
-        }
-      ]);
+      // Set empty arrays in case of error
+      setCategories([]);
+      setFeaturedProducts([]);
     }
   };
 
   const fetchProductsByCategory = async (categoryId: number) => {
     try {
-      const response = await fetch(`${API_URL}/products?categoryId=${categoryId}`);
-      const data = await response.json();
-      setCategoryProducts(data);
+      // Use the API utility function
+      const products = await getProducts(categoryId);
+      setCategoryProducts(products);
     } catch (error) {
       console.error('Error fetching products for category:', error);
       setCategoryProducts([]);
@@ -108,51 +81,23 @@ const HomeScreen = () => {
     navigation.navigate('ARView', { product });
   };
 
+  const handleCategoryPress = (categoryId: number) => {
+    setSelectedCategory(selectedCategory === categoryId ? null : categoryId);
+  };
+
   const renderCategoryItem = ({ item }: { item: Category }) => (
-    <TouchableOpacity
-      style={[
-        styles.categoryItem,
-        selectedCategory === item.id && styles.categoryItemSelected
-      ]}
-      onPress={() => {
-        setSelectedCategory(selectedCategory === item.id ? null : item.id);
-      }}
-    >
-      <Text 
-        style={[
-          styles.categoryText,
-          selectedCategory === item.id && styles.categoryTextSelected
-        ]}
-      >
-        {item.name}
-      </Text>
-    </TouchableOpacity>
+    <CategoryItem
+      category={item}
+      isSelected={selectedCategory === item.id}
+      onPress={handleCategoryPress}
+    />
   );
 
   const renderProductItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity 
-      style={styles.productCard}
-      onPress={() => handleSelectProduct(item)}
-    >
-      <View style={styles.productImageContainer}>
-        <Image 
-          source={{ uri: item.imageUrl }} 
-          style={styles.productImage}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={styles.productInfo}>
-        <Text style={styles.productBrand}>{item.brand}</Text>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productPrice}>${item.price}</Text>
-        <TouchableOpacity 
-          style={styles.tryOnButton}
-          onPress={() => handleSelectProduct(item)}
-        >
-          <Text style={styles.tryOnButtonText}>Try On</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+    <ProductCard
+      product={item}
+      onPress={handleSelectProduct}
+    />
   );
 
   if (isLoading) {
@@ -182,31 +127,13 @@ const HomeScreen = () => {
           <Text style={styles.searchPlaceholder}>Search for shoes...</Text>
         </View>
         
-        <LinearGradient
-          colors={['#3B5BA5', '#6982C3']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.featuredBanner}
-        >
-          <View style={styles.bannerContent}>
-            <View style={styles.bannerText}>
-              <Text style={styles.bannerTitle}>Try Before You Buy</Text>
-              <Text style={styles.bannerSubtitle}>
-                Use AR technology to see how shoes look on your feet
-              </Text>
-              <TouchableOpacity style={styles.bannerButton}>
-                <Text style={styles.bannerButtonText}>Learn More</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.bannerImageContainer}>
-              <Image 
-                source={{ uri: featuredProducts[0]?.imageUrl }} 
-                style={styles.bannerImage}
-                resizeMode="contain"
-              />
-            </View>
-          </View>
-        </LinearGradient>
+        <FeatureBanner
+          title="Try Before You Buy"
+          subtitle="Use AR technology to see how shoes look on your feet"
+          buttonText="Learn More"
+          imageUrl={featuredProducts[0]?.imageUrl}
+          onPress={() => console.log('Learn more about AR')}
+        />
         
         <View style={styles.categoriesContainer}>
           <Text style={styles.sectionTitle}>Categories</Text>
