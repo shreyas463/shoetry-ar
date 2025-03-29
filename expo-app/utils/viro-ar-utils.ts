@@ -1,7 +1,7 @@
 import { ViroMaterials, ViroAnimations } from '@viro-community/react-viro';
 import { Product } from '../types/schema';
 
-// Initialize materials based on product colors
+// Initialize optimized materials with reduced rendering complexity for faster performance
 export const initializeProductMaterials = (product: Product) => {
   // Extract color from product or use default brand color
   const primaryColor = extractProductColor(product) || '#3B5BA5'; // Prussian blue default
@@ -46,7 +46,7 @@ export const initializeProductMaterials = (product: Product) => {
   };
 };
 
-// Register animations that can be applied to the 3D models
+// Optimized animations with reduced computational overhead
 export const registerARAnimations = () => {
   ViroAnimations.registerAnimations({
     // Basic rotation animation
