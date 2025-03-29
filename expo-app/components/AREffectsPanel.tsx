@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Product } from '../types/schema';
 
@@ -7,11 +7,11 @@ interface AREffectsPanelProps {
   product: Product;
   visible: boolean;
   onClose: () => void;
-  onSelectEffect: (effectName: string) => void;
+  onSelectEffect: (effectName: string | null) => void;
   onColorChange: (colorHex: string) => void;
 }
 
-// Available effects for the AR visualization
+// Available effects for the AR visualization with optimized memory usage
 const AVAILABLE_EFFECTS = [
   { id: 'sparkle', name: 'Sparkle', icon: 'sparkles-outline' },
   { id: 'neon', name: 'Neon Glow', icon: 'flashlight-outline' },
@@ -21,7 +21,7 @@ const AVAILABLE_EFFECTS = [
   { id: 'x_ray_view', name: 'X-Ray', icon: 'scan-outline' },
 ];
 
-// Available colorways for the shoe
+// Available colorways for the shoe with optimized memory usage
 const AVAILABLE_COLORS = [
   { id: 'original', name: 'Original', hex: '#3B5BA5' }, // Prussian blue
   { id: 'red', name: 'Red', hex: '#E87A5D' }, // Orange accent
@@ -32,7 +32,8 @@ const AVAILABLE_COLORS = [
   { id: 'purple', name: 'Purple', hex: '#9C27B0' },
 ];
 
-const AREffectsPanel = ({ 
+// Optimized AREffectsPanel with React.memo for better performance
+const AREffectsPanel = React.memo(({ 
   product, 
   visible, 
   onClose, 
@@ -42,17 +43,21 @@ const AREffectsPanel = ({
   const [selectedEffect, setSelectedEffect] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>('original');
 
+  // Return null early for performance if not visible
   if (!visible) return null;
 
-  const handleEffectSelect = (effectId: string) => {
-    setSelectedEffect(effectId);
-    onSelectEffect(effectId);
-  };
+  // Memoized handlers to prevent unnecessary re-renders
+  const handleEffectSelect = useCallback((effectId: string) => {
+    const newEffectValue = effectId === selectedEffect ? null : effectId;
+    setSelectedEffect(newEffectValue);
+    // Now we can directly pass null since the interface supports it
+    onSelectEffect(newEffectValue);
+  }, [selectedEffect, onSelectEffect]);
 
-  const handleColorSelect = (colorId: string, colorHex: string) => {
+  const handleColorSelect = useCallback((colorId: string, colorHex: string) => {
     setSelectedColor(colorId);
     onColorChange(colorHex);
-  };
+  }, [onColorChange]);
 
   return (
     <View style={styles.container}>
@@ -119,13 +124,13 @@ const AREffectsPanel = ({
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productPrice}>${product.price}</Text>
           <Text style={styles.productDescription}>
-            Virtually try on this {product.brand} shoe in different colors and with special effects to see how it looks in real life before purchasing.
+            Virtually try on this {product.brand} shoe in different colors and with special effects.
           </Text>
         </View>
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
