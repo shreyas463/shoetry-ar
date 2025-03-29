@@ -1,0 +1,49 @@
+{
+  "model_name": "default_sneaker",
+  "description": "Default sneaker model for AR visualization when product-specific models aren't available",
+  "format": "glb",
+  "scale": [0.12, 0.12, 0.12],
+  "position": [0, 0, -0.3],
+  "rotation": [0, 0, 0],
+  "animation_options": {
+    "rotation_speed": 15,
+    "hover_distance": 0.1,
+    "hover_duration": 1000
+  },
+  "materials": [
+    {
+      "name": "upper",
+      "properties": {
+        "diffuse_color": "#FFFFFF",
+        "metalness": 0.2,
+        "roughness": 0.7
+      }
+    },
+    {
+      "name": "sole",
+      "properties": {
+        "diffuse_color": "#3B5BA5", 
+        "metalness": 0.4,
+        "roughness": 0.5
+      }
+    },
+    {
+      "name": "laces",
+      "properties": {
+        "diffuse_color": "#F3F3F3",
+        "metalness": 0.1,
+        "roughness": 0.9
+      }
+    }
+  ],
+  "physics": {
+    "mass": 1.0,
+    "friction": 0.5,
+    "restitution": 0.3
+  },
+  "textures": {
+    "normal_map": "normal_map.jpg",
+    "roughness_map": "roughness_map.jpg",
+    "ao_map": "ao_map.jpg"
+  }
+}
