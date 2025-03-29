@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   ViroARScene,
   ViroAmbientLight,
@@ -11,7 +11,8 @@ import {
   ViroARTrackingTargets,
   ViroMaterials,
   ViroAnimations,
-  ViroConstants
+  ViroConstants,
+  ViroText
 } from '@viro-community/react-viro';
 import { Product } from '../types/schema';
 import ARViroUtils from '../utils/viro-ar-utils';
@@ -36,7 +37,8 @@ ViroARTrackingTargets.createTargets({
   }
 });
 
-const EnhancedARScene = ({
+// Optimized with React.memo for better performance
+const EnhancedARScene = React.memo(({
   product,
   onPlaneDetected,
   onAnchorFound,
@@ -46,14 +48,17 @@ const EnhancedARScene = ({
   activeEffect,
   activeColorHex = '#3B5BA5'
 }: EnhancedARSceneProps) => {
-  const [text, setText] = useState('Initializing AR...');
+  // State variables that trigger re-renders
   const [modelPlaced, setModelPlaced] = useState(false);
-  const [markerFound, setMarkerFound] = useState(false);
-  const [planeFound, setPlaneFound] = useState(false);
   const [footPosition, setFootPosition] = useState([0, -0.5, -0.5]);
+  const [planeFound, setPlaneFound] = useState(false);
+  const [markerFound, setMarkerFound] = useState(false);
   const [lightingEstimate, setLightingEstimate] = useState(1000);
-  const [modelInfo] = useState(ARViroUtils.getModelInfo(product));
   const [trackingNormal, setTrackingNormal] = useState([0, 1, 0]);
+  const [text, setText] = useState('Initializing AR...');
+  
+  // Pre-calculate model info once for better performance
+  const modelInfo = useMemo(() => ARViroUtils.getModelInfo(product), [product]);
   
   // Register custom product-based materials
   useEffect(() => {
